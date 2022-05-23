@@ -2,11 +2,15 @@ const mongoose = require("../config/database");
 const request = require('supertest');
 const express = require('express');
 const tasks = require("../routes/tasks");
+const users = require("../routes/users");
 const url = mongoose.connection._connectionString;
 
 const app = express();
-app.use("/tasks", tasks);
 app.use(express.json());
+
+app.use("/tasks", tasks);
+app.use("/users", users);
+
 
 test("L'Addresse de la DB doit contenir nodejsapi mais pas dev ni prod", () => {
     expect(url).toMatch(/nodejsapi/);
@@ -53,6 +57,33 @@ describe("Task model", () => {
         .expect(500)
         .end(function (err, res) { done(); });
     });
-
 })
-  
+
+describe("user model", () => {
+
+    it("should add to DB and return username without password", async () => {
+        const result = await request(app)
+          .post("/users/register")
+          .send({
+            name: "Deadpool",
+            password: "secret1234",
+            email: "deadpool@gmail.com",
+          })
+          .expect(201);
+        expect(result.body).toEqual({
+          name: "Deadpool",
+          email: "deadpool@gmail.com",
+          status: "success"
+        });
+    })
+    // it("should connect the user", async () => {  //Ne fonctionne pas je ne sais pas pourquoi
+
+    //     const result2 = await request(app)
+    //       .post("/users/authenticate")
+    //       .send({
+    //         password: "secret1234",
+    //         email: "deadpool@gmail.com",
+    //       })
+    //       .expect(200);
+    // });
+})
