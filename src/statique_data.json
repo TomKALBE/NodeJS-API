@@ -1,0 +1,10 @@
+[   
+    {
+        "description" : "Ajouter la requête GET au CRUD",
+        "done" : "true"
+    },
+    {
+        "description" : "Ajouter la requête POST au CRUD",
+        "done" : "false"
+    }
+]
