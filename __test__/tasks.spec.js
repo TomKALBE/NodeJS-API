@@ -16,7 +16,8 @@ test("L'Addresse de la DB doit contenir nodejsapi mais pas dev ni prod", () => {
 
 describe("Task model", () => {
     let id = 0;
-    test(`Recuperer les donnees sur l'url /tasks`, async () => {
+    let done = "";
+    test(`GET Recuperer les donnees sur l'url /tasks`, async () => {
         const res = await request(app)
          .get('/tasks')
             .set('Accept', 'application/json')
@@ -24,8 +25,9 @@ describe("Task model", () => {
             .expect(200);
         const data = JSON.parse(res.text)
         id = data.data.tasks[0].id;
+        done = data.data.tasks[0].done
     });
-    test(`Recuperer les donnees sur l'url /tasks/id`, async () => {
+    test(`GET Recuperer les donnees sur l'url /tasks/id`, async () => {
         const res = await request(app)
          .get('/tasks/' + id)
             .set('Accept', 'application/json')
@@ -41,6 +43,7 @@ describe("Task model", () => {
         .expect(201)
         .end(function (err, res) { done(); });
     });
+
     test('Post tasks incorrect', function(done) {
         const data = {description : "test"}
         request(app)
