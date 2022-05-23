@@ -26,6 +26,7 @@ module.exports = {
                         done: task.done,
                     });
                 }
+                res.status(200)
                 res.json({
                     status: "success",
                     message: "Tasks list found!!!",
@@ -35,17 +36,18 @@ module.exports = {
         });
     },
     create: function (req, res, next) {
-        console.log(res)
         taskModel.create(
             { description: req.body.description, done: req.body.done },
             function (err, result) {
                 if (err) next(err);
-                else
+                else{
+                    res.status(201)
                     res.json({
                         status: "success",
                         message: "Task added successfully!!!",
                         data: null,
                     });
+                }
             }
         );
     },
