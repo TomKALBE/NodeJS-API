@@ -52,7 +52,6 @@ module.exports = {
         );
     },
     updateById: function (req, res, next) {
-        console.log(req.params)
         taskModel.findByIdAndUpdate(
             req.params.taskId,
             { done: req.body.done },
