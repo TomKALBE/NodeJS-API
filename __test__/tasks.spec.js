@@ -38,25 +38,47 @@ describe("Task model", () => {
             .expect('Content-Type', /json/)
             .expect(200);
     });
-    test('Post tasks correct', function(done) {
-        const data = {description : "test", done : false}
-        request(app)
-        .post('/')
-        .send(data)
-        .set('Accept', /application\/json/)
-        .expect(201)
-        .end(function (err, res) { done(); });
+    test('Post tasks correct', async () => {
+        const result = await request(app)
+          .post("/tasks/")
+          .send({
+            description: "APICRUD",
+            done: false,
+          })
+          .expect(201);
+    });
+    test('Post tasks incorrect', async () => {
+        const result = await request(app)
+          .post("/tasks/")
+          .send({
+            done: false,
+          })
+          .expect(500);
+    });
+    test('PUT tasks correct', async () => {
+        const result = await request(app)
+          .put("/tasks/" + id)
+          .send({done:true})
+          .expect(200);
+    });
+    test('PUT tasks incorrect', async () => {
+        const result = await request(app)
+          .put("/tasks/" + id + id)
+          .send({test:true})
+          .expect(500);
     });
 
-    test('Post tasks incorrect', function(done) {
-        const data = {description : "test"}
-        request(app)
-        .post('/')
-        .send(data)
-        .set('Accept', /application\/json/)
-        .expect(500)
-        .end(function (err, res) { done(); });
+    test('DELETE tasks correct', async () => {
+        const result = await request(app)
+          .delete("/tasks/" + id)
+          .expect(200);
     });
+    test('DELETE tasks incorrect', async () => {
+        const result = await request(app)
+          .delete("/tasks/" + id + "test")
+          .expect(500);
+    });
+
 })
 
 describe("user model", () => {
