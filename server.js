@@ -8,7 +8,7 @@ mongoose.connection.on(
     "error",
     console.error.bind(console, "MongoDB connection error:")
 );
-
+app.use(express.json());
 app.get("/", function (req, res) {
     res.json("Evaluation nodejs");
 });
