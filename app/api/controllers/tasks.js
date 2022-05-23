@@ -51,4 +51,21 @@ module.exports = {
             }
         );
     },
+    updateById: function (req, res, next) {
+        console.log(req.params)
+        taskModel.findByIdAndUpdate(
+            req.params.taskId,
+            { done: req.body.done },
+            function (err, movieInfo) {
+                if (err) next(err);
+                else {
+                    res.json({
+                        status: "success",
+                        message: "Task updated successfully!!!",
+                        data: null,
+                    });
+                }
+            }
+        );
+    },
 };
