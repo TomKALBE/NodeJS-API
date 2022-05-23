@@ -67,4 +67,19 @@ module.exports = {
             }
         );
     },
+    deleteById: function (req, res, next) {
+        taskModel.findByIdAndRemove(
+            req.params.taskId,
+            function (err, movieInfo) {
+                if (err) next(err);
+                else {
+                    res.json({
+                        status: "success",
+                        message: "Task deleted successfully!!!",
+                        data: null,
+                    });
+                }
+            }
+        );
+    },
 };
