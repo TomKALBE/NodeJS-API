@@ -16,6 +16,6 @@
     "joi": "^17.6.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.4",
-    "supertest": "^6.2.3"
+    "supertest": "^6.3.3"
   }
 }
